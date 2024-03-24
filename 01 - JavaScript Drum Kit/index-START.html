@@ -58,9 +58,33 @@
   <audio data-key="75" src="sounds/tom.wav"></audio>
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
-<script>
-
-</script>
+  <script>
+    const keys = document.querySelectorAll(".key");
+    keys.forEach(key => {
+      key.addEventListener("transitionend", removeTransition);
+    });
+  
+    window.addEventListener("keydown", playSound);
+  
+    function removeTransition(event) {
+      if (event.propertyName !== "transform") return; //skip
+      event.target.classList.remove("playing") // this refers to the element that fires the function, in our case,it's the key that was pressed to play the audio
+    }
+  
+    function playSound() {
+      // select the audio based on pressed key
+      const audio = document.querySelector(`audio[data-key="${event.keyCode}"]`);
+  
+      // select UI element based on pressed key
+      const key   = document.querySelector(`.key[data-key="${event.keyCode}"]`);
+  
+      if(!audio) return; // stop the function from running since there is no audio element associated with that key
+      audio.currentTime = 0; //reset the audio file at the beginning
+      audio.play();
+      key.classList.add('playing');
+    }
+  
+  </script>
 
 
 </body>
