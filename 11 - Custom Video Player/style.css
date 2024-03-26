@@ -31,11 +31,13 @@ body {
 .player:fullscreen {
   max-width: none;
   width: 100%;
+  display: flex;
 }
 
 .player:-webkit-full-screen {
   max-width: none;
   width: 100%;
+  display: flex;
 }
 
 .player__video {
@@ -98,16 +100,17 @@ body {
 }
 
 .progress__filled {
-  width: 50%;
+  width: 0%;
   background: #ffc600;
   flex: 0;
-  flex-basis: 50%;
+  flex-basis: 0%;
 }
 
 /* unholy css to style input type="range" */
 
 input[type=range] {
   -webkit-appearance: none;
+          appearance: none;
   background: transparent;
   width: 100%;
   margin: 0 5px;
@@ -159,4 +162,11 @@ input[type=range]::-moz-range-thumb {
   border-radius: 50px;
   background: #ffc600;
   cursor: pointer;
+}
+
+video::-webkit-media-controls {
+  display:none !important;
+}
+video::-webkit-media-controls-enclosure {
+  display:none !important;
 }
