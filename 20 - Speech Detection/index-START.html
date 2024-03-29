@@ -1,20 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Speech Detection</title>
   <link rel="icon" href="https://fav.farm/🔥" />
 </head>
+
 <body>
 
-  <div class="words" contenteditable>
+  <div class="words">
   </div>
 
-<script>
-  window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  <script>
+    window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
+    const recognition = new SpeechRecognition();
+    recognition.interimResults = true;
+    recognition.lang = 'en-US';
 
-</script>
+    let p = document.createElement('p');
+    const words = document.querySelector('.words');
+    words.appendChild(p);
+
+    function getWeather() {
+      const url = `https://api.openweathermap.org/data/2.5/weather?lat=46.7766247&lon=23.6296111&appid=fd40260f39e3f3da4cf1fa38318321eb&units=metric`;
+      
+      return fetch(url) 
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          const temp = data.main.temp;
+          return temp;
+        })
+        .catch(error => {
+          console.error("Error fetching weather data:", error);
+          throw error;
+        });
+    }
+
+    recognition.addEventListener('result', e => {
+      const transcript = Array.from(e.results)
+        .map((result) => result[0])
+        .map((result) => result.transcript)
+        .join('');
+      p.textContent = transcript;
+      if (e.results[0].isFinal) {
+        if (transcript.includes('dog')) {
+          let dog = document.createElement('p');
+          dog.innerText = "🐶 Woof!";
+          dog.style.fontSize = "100px";
+          dog.style.padding = "20px 30px"
+          words.appendChild(dog);
+          prepareNewParagraph()
+        } else if (transcript.includes("weather")) {
+          getWeather().then(temp => {
+            let w = document.createElement('p');
+            w.innerText = `The current temperature is ${temp}°C`;
+            words.appendChild(w);
+            prepareNewParagraph()
+          });
+        }
+        prepareNewParagraph()
+      }
+      console.log(transcript);
+    });
+
+    function prepareNewParagraph() {
+      p = document.createElement('p');
+      words.appendChild(p);
+    }
+
+    recognition.addEventListener("end", recognition.start);
+    recognition.start();
+
+  </script>
 
 
   <style>
@@ -23,8 +87,8 @@
     }
 
     body {
-      background: #ffc600;
-      font-family: 'helvetica neue';
+      background: #ffc300;
+      /* font-family: 'helvetica neue'; */
       font-weight: 200;
       font-size: 20px;
     }
@@ -34,7 +98,7 @@
       margin: 50px auto;
       background: white;
       border-radius: 5px;
-      box-shadow: 10px 10px 0 rgba(0,0,0,0.1);
+      box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.1);
       padding: 1rem 2rem 1rem 5rem;
       background: -webkit-gradient(linear, 0 0, 0 100%, from(#d9eaf3), color-stop(4%, #fff)) 0 4px;
       background-size: 100% 3rem;
@@ -59,4 +123,5 @@
   </style>
 
 </body>
+
 </html>
