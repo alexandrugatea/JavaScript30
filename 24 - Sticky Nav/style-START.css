@@ -1,7 +1,6 @@
 html {
   box-sizing: border-box;
   background: #eeeeee;
-  font-family: 'helvetica neue';
   font-size: 20px;
   font-weight: 200;
 }
@@ -69,7 +68,7 @@ li.logo {
   max-width: 0;
   overflow: hidden;
   background: white;
-  transition: all .5s;
+  transition: all 1s ease-out;
   font-weight: 600;
   font-size: 30px;
 }
@@ -85,4 +84,23 @@ nav a {
   color: white;
   transition: all 0.2s;
   text-transform: uppercase;
+}
+#main {
+   box-shadow: 0 0 0px 0 rgba(0,0,0,0.2);
+   transition: all 0.25s cubic-bezier(1,-0.43, 0.15, 1.24);
+}
+
+body.fixed #main {
+  position: fixed;
+   box-shadow: 0 0 20px 0 rgba(0,0,0,0.35);
+
+}
+
+body.fixed #main li.logo {
+  max-width: 500px;
+  transition: all 1s ease-in;
+}
+
+body.fixed .site-wrap {
+  transform: scale(1);
 }

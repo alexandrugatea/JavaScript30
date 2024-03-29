@@ -55,7 +55,27 @@
   </div>
 
 <script>
+  const navbar = document.querySelector("#main");
+  const body = document.querySelector("body");
+  let navbarHeight = navbar.clientHeight;
+  const topOfnav = navbar.offsetTop;
 
+  function fixNav() {
+    window.scrollY >= topOfnav ? setFixed(body) : removeFixed(body);
+  }
+
+  function setFixed(el) {
+    el.classList.add("fixed");
+    el.style.marginTop = `${navbarHeight}px`;
+  }
+
+  function removeFixed(el) {
+    el.classList.remove("fixed");
+    el.style.marginTop = 0;
+
+  }
+
+  window.addEventListener("scroll", fixNav);
 </script>
 
 </body>
