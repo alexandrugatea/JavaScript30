@@ -24,7 +24,8 @@
     words.appendChild(p);
 
     function getWeather() {
-      const url = `https://api.openweathermap.org/data/2.5/weather?lat=46.7766247&lon=23.6296111&appid=fd40260f39e3f3da4cf1fa38318321eb&units=metric`;
+      let apiKey = 'fd40260f39e3f3da4cf1fa38318321eb';
+      const url = `https://api.openweathermap.org/data/2.5/weather?lat=46.7766247&lon=23.6296111&appid=${apiKey}&units=metric`;
       
       return fetch(url) 
         .then(response => {
