@@ -11,9 +11,14 @@
 
 
   <h1 class="speed">
-    <span class="speed-value">0</span>
-    <span class="units">KM/H</span>
+      <span class="speed-value">0</span>
+      <span class="units">KM/H</span>
   </h1>
+  <p>
+    Lat <span class="coord-lat">0</span> : 
+    Long <span class="coord-lon">0</span>
+  </p>
+  <button onclick=getCoordinates()>Get Coordinates</button>
 
   <style>
     html {
@@ -23,7 +28,7 @@
     body {
       margin: 0;
       font-family: sans-serif;
-      min-height: 100vh;
+      min-height: 100dvh;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -54,12 +59,42 @@
       align-items: center;
     }
 
+    p {
+      display: flex;
+      font-size: 24px;
+      color: #c7c7c7;
+    }
+
+    p span {
+      padding: 0 10px;
+    }
+
     .units {
       font-size: 15px;
     }
     /*Compass: https://thenounproject.com/search/?q=compass&i=592352*/
   </style>
   <script>
+    let lat = document.querySelector('.coord-lat');
+    let lon = document.querySelector('.coord-lon');
+    const arrow = document.querySelector('.arrow');
+    const speed = document.querySelector('.speed-value');
+
+
+
+    function getCoordinates() {
+      navigator.geolocation.watchPosition((data) => {
+        console.log(data);
+
+        lat.innerHTML = data.coords.latitude;
+        lon.innerHTML = data.coords.longitude;
+
+        data.coords.speed !== null ? speed.textContent = data.coords.speed : speed.textContent = "0";
+        arrow.style.transform = `rotate(${data.coords.heading}deg)`;
+      }, (err) => {
+        console.error(err);
+      });
+    }
   </script>
 </body>
 </html>
