@@ -41,8 +41,31 @@
   }
 </style>
 
-<button></button>
+<button>Click me</button>
 <script>
+  const one = document.querySelector('.one');
+  const two = document.querySelector('.two');
+  const three = document.querySelector('.three');
+  const allDivs = document.querySelectorAll('div');
+  const btn = document.querySelector('button');
+
+
+  function logText(e) {
+    console.log(this.classList.value);
+    e.stopPropagation();
+  }
+
+  allDivs.forEach(div => div.addEventListener('click', logText, {
+    // capture: true
+    capture: false,
+    // once: true // only allow one click event, then remove the event listener
+  }));
+
+  btn.addEventListener('click', () => {
+    console.log("Button was clicked once")
+  }, {
+    once: true
+  });
 
 </script>
 </body>
